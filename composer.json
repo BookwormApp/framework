@@ -1,0 +1,35 @@
+{
+	"name": "bookworm/framework",
+	"description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Papertank Limited",
+            "email": "hello@papertank.co.uk"
+        }
+    ],
+	"require": {
+        "php": ">=5.5.9",
+		"illuminate/support": "~5.2",
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "laravelcollective/html": "~5.2",
+        "origami/api": "1.1.*",
+        "origami/mail": "1.1.*",
+        "origami/notice": "1.1.*",
+        "origami/seo": "1.1.*",
+        "origami/support": "1.2.*",
+        "google/recaptcha": "~1.1"
+	},
+    "require-dev": {
+        "fzaninotto/faker": "~1.4"
+    },
+	"autoload": {
+        "psr-4": {
+            "Bookworm\\": "src/Bookworm"
+        },
+        "files": [
+            "src/Bookworm/Support/helpers.php"
+        ]
+	},
+	"minimum-stability": "dev"
+}
