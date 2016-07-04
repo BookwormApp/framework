@@ -5,6 +5,7 @@ namespace Bookworm\Users;
 use Bookworm\Support\Entities\Model;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -15,7 +16,7 @@ class User extends Model implements
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable, Authorizable, CanResetPassword, SoftDeletes;
 
     protected $table = 'users';
     protected $fillable = ['name', 'email', 'password'];
@@ -37,4 +38,17 @@ class User extends Model implements
 
         return $this;
     }
+
+    public function is($user)
+    {
+        $id = $user instanceof User ? $user->getKey() : $user;
+
+        return $this->id == $id;
+    }
+
+    public function url($suffix = '')
+    {
+        return url(rtrim('settings/users/'.$this->ref.'/'.$suffix, '/'));
+    }
+
 }

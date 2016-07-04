@@ -14,4 +14,9 @@ var elixir = require('laravel-elixir');
 elixir(function(mix) {
     mix.sass('app.scss', 'public/assets/css/app.css')
     	.sass('icons.scss', 'public/assets/css/icons.css');
+
+    mix.browserSync({
+        proxy: 'bookworm.dev',
+        files: ['public/assets/css/app.css']
+    });
 });

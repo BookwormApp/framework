@@ -19,6 +19,65 @@ body {
   background-color: $label-danger-bg;
 }
 
+.btn-link {
+  background: transparent !important;
+  border-color: transparent !important;
+  &.btn-danger {
+    &, &:active {
+      color: $btn-danger-bg;
+    }
+  }
+}
+
+.page-header {
+  margin: 10px 0 30px 0;
+  @include clearfix();
+  @media ( min-width: $screen-md-min ) {
+    .page-title {
+      float: left;
+    }
+    .page-actions {
+      margin: 20px 0 0 0;
+      float: right;
+    }
+  }
+}
+
+table {
+  tr[data-href] {
+    cursor: pointer;
+  }
+  td.links {
+    cursor: default;
+  }
+}
+
+.panel-form {
+  .form-horizontal {
+    .panel-body {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    .form-group {
+      border-bottom: 1px dashed #e7eaec;
+      margin: 10px 0 20px 0;
+      padding: 0 15px 20px 15px;
+      &:last-of-type {
+        border: none;
+        padding-bottom: 0px;
+      }
+    }
+  }
+  .panel-footer {
+    @include clearfix();
+  }
+}
+
+.pagination-container {
+  font-size: 14px;
+  text-align: center;
+}
+
 table tr[data-href] {
   > td {
     cursor: pointer;

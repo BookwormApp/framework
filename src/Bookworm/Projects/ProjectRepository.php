@@ -1,21 +1,24 @@
 <?php
 
-namespace Bookworm\Users;
+namespace Bookworm\Projects;
 
 use Bookworm\Exceptions\StorageException;
-use Bookworm\Support\Entities\DbRepository;
+use Origami\Support\Entities\DbRepository;
 use Origami\Support\Entities\PaginateTrait;
 use Origami\Support\Entities\ReferenceTrait;
 
-class UserRepository extends DbRepository
-{
+class ProjectRepository extends DbRepository {
+
     use PaginateTrait, ReferenceTrait;
 
-    protected $user;
+    /**
+     * @var \Bookworm\Projects\Project
+     */
+    private $project;
 
-    public function __construct(User $user)
+    public function __construct(Project $project)
     {
-        $this->user = $user;
+        $this->project = $project;
     }
 
     public function search(array $filters = [], $sort = null, $paginate = true)
@@ -39,8 +42,8 @@ class UserRepository extends DbRepository
         $sort = $this->parseSortOrder($sort ?: 'created_at.desc');
 
         switch ( $sort['field'] ) {
-            case 'name':
-                $query->orderBy('name',$sort['direction']);
+            case 'title':
+                $query->orderBy('title',$sort['direction']);
                 break;
             case 'date':
             case 'created_at':
@@ -51,45 +54,49 @@ class UserRepository extends DbRepository
         return $query;
     }
 
-    public function create(array $fields)
+    public function create(array $fields, array $related = [])
     {
-        $user = $this->user->newInstance($fields);
-        $user->ref = $this->newUserRef();
+        $project = $this->project->newInstance($fields);
+        $project->ref = $this->newProjectRef();
 
-        if (!$user->save()) {
+        if ( $createdBy = array_get('createdBy', $related) ) {
+            $project->createdBy()->associate($createdBy);
+        }
+
+        if ( ! $project->save() ) {
             throw new StorageException;
         }
 
-        return $user;
+        return $project;
     }
 
-    public function update(User $user, array $fields)
+    public function update(Project $project, array $fields)
     {
-        $user->fill($fields);
+        $project->fill($fields);
 
-        if ( ! $user->save() ) {
+        if ( ! $project->save() ) {
             throw new StorageException;
         }
 
-        return $user;
+        return $project;
     }
 
-    public function delete(User $user)
+    public function delete(Project $project)
     {
-        if ( ! $user->delete() ) {
+        if ( ! $project->delete() ) {
             throw new StorageException;
         }
 
         return true;
     }
 
-    protected function newUserRef()
+    protected function newProjectRef()
     {
-        return $this->newUniqueRef($this->newQuery(), 3, 'ref', 'numeric');
+        return $this->newUniqueRef($this->newQuery(), 4, 'ref', 'numeric');
     }
 
     protected function newQuery()
     {
-        return $this->user->newQuery();
+        return $this->project->newQuery();
     }
 }

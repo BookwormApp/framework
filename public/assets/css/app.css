@@ -9827,6 +9827,80 @@ body {
   background-color: #d9534f;
 }
 
+.btn-link {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.btn-link.btn-danger,
+.btn-link.btn-danger:active {
+  color: #d9534f;
+}
+
+.page-header {
+  margin: 10px 0 30px 0;
+}
+
+.page-header:before,
+.page-header:after {
+  content: " ";
+  display: table;
+}
+
+.page-header:after {
+  clear: both;
+}
+
+@media (min-width: 992px) {
+  .page-header .page-title {
+    float: left;
+  }
+
+  .page-header .page-actions {
+    margin: 20px 0 0 0;
+    float: right;
+  }
+}
+
+table tr[data-href] {
+  cursor: pointer;
+}
+
+table td.links {
+  cursor: default;
+}
+
+.panel-form .form-horizontal .panel-body {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.panel-form .form-horizontal .form-group {
+  border-bottom: 1px dashed #e7eaec;
+  margin: 10px 0 20px 0;
+  padding: 0 15px 20px 15px;
+}
+
+.panel-form .form-horizontal .form-group:last-of-type {
+  border: none;
+  padding-bottom: 0px;
+}
+
+.panel-form .panel-footer:before,
+.panel-form .panel-footer:after {
+  content: " ";
+  display: table;
+}
+
+.panel-form .panel-footer:after {
+  clear: both;
+}
+
+.pagination-container {
+  font-size: 14px;
+  text-align: center;
+}
+
 table tr[data-href] > td {
   cursor: pointer;
 }

@@ -34,6 +34,7 @@ class BookwormServiceProvider extends ServiceProvider
         'Str' => 'Illuminate\Support\Str',
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
+        'Input' => 'Illuminate\Support\Facades\Input',
     ];
 
     /**

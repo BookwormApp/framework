@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="page-header clearfix">
-        <h1 class="page-title">Users</h1>
+        <h1 class="page-title">Cases</h1>
         <div class="page-actions">
-            <a href="{{ url('settings/users/create') }}" class="btn btn-default">New User</a>
+            <a href="{{ url('cases/create') }}" class="btn btn-default">New Case</a>
         </div>
     </div>
 
@@ -12,15 +12,15 @@
         <div class="col-sm-12">
 
             <div class="panel panel-default panel-table">
-                @if ($users->isEmpty())
+                @if ($cases->isEmpty())
                     <div class="panel-body">
                         <div class="no-content">
-                            <i class="fa fa-user-o fa-2x"></i>
+                            <i class="fa fa-case-o fa-2x"></i>
                             @if (Input::except('page'))
-                                <p>No users match search</p>
+                                <p>No cases match search</p>
                             @else
-                                <p>No users</p>
-                                <a href="{{ url('settings/users/create') }}" class="btn btn-default">New User</a>
+                                <p>No cases</p>
+                                <a href="{{ url('cases/create') }}" class="btn btn-default">New Case</a>
                             @endif
                         </div>
                     </div>
@@ -29,20 +29,18 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
+                                <th width="100">#</th>
+                                <th>Title</th>
                                 <th width="100"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ( $users as $user )
-                                <tr data-href="{{ $user->url() }}">
-                                    <td>{{ $user->ref }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                            @foreach ( $cases as $case )
+                                <tr data-href="{{ $case->url() }}">
+                                    <td>{{ $case->ref }}</td>
+                                    <td>{{ $case->title }}</td>
                                     <td class="links">
-                                        <a href="{{ $user->url() }}" class="btn btn-default">Edit</a>
+                                        <a href="{{ $case->url() }}" class="btn btn-default">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -51,7 +49,7 @@
                     </div>
                     <div class="panel-footer">
                         <div class="pagination-container">
-                            {!! $users->links() !!}
+                            {!! $cases->links() !!}
                         </div>
                     </div>
                 @endif
