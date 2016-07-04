@@ -6,37 +6,36 @@ use Bookworm\Exceptions\StorageException;
 use Bookworm\Support\Entities\DbRepository;
 use Origami\Support\Entities\ReferenceTrait;
 
-class UserRepository extends DbRepository {
+class UserRepository extends DbRepository
+{
+    use ReferenceTrait;
 
-	use ReferenceTrait;
+    protected $user;
 
-	protected $user;
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
 
-	public function __construct(User $user)
-	{
-		$this->user = $user;
-	}
+    public function create(array $fields)
+    {
+        $user = $this->user->newInstance($fields);
+        $user->ref = $this->newUserRef();
 
-	public function create(array $fields)
-	{
-		$user = $this->user->newInstance($fields);
-		$user->ref = $this->newUserRef();
+        if (!$user->save()) {
+            throw new StorageException();
+        }
 
-		if ( ! $user->save() ) {
-			throw new StorageException;
-		}
+        return $user;
+    }
 
-		return $user;
-	}
+    protected function newUserRef()
+    {
+        return $this->newUniqueRef($this->newQuery(), 3, 'ref', 'numeric');
+    }
 
-	protected function newUserRef()
-	{
-		return $this->newUniqueRef($this->newQuery(), 3, 'ref', 'numeric');
-	}
-
-	protected function newQuery()
-	{
-		return $this->user->newQuery();
-	}
-
+    protected function newQuery()
+    {
+        return $this->user->newQuery();
+    }
 }

@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Password as Status;
 use Bookworm\Http\Controllers\Controller;
 use Bookworm\Support\Validation\ValidatesCaptcha;
 
-class Passwords extends Controller {
-
+class Passwords extends Controller
+{
     use ValidatesCaptcha;
 
     /**
@@ -41,23 +41,24 @@ class Passwords extends Controller {
         $this->validateCaptcha($request);
 
         $this->validate($request, [
-            'email' => ['required', 'email']
+            'email' => ['required', 'email'],
         ]);
 
-        $status = $this->passwords->sendResetLink($request->only('email'), function(Message $message)
-        {
+        $status = $this->passwords->sendResetLink($request->only('email'), function (Message $message) {
            $message->subject('Reset your password');
         });
 
-        switch ( $status ) {
+        switch ($status) {
 
             case Status::RESET_LINK_SENT:
                 notice()->success(trans($status));
+
                 return redirect('login');
 
             case Status::INVALID_USER:
             default:
                 notice()->error(trans($status));
+
                 return redirect()->back();
         }
     }
@@ -80,36 +81,35 @@ class Passwords extends Controller {
         $this->validate($request, [
             'token' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', 'min:6']
+            'password' => ['required', 'confirmed', 'min:6'],
         ]);
 
         $credentials = $request->only(
             'email', 'password', 'password_confirmation', 'token'
         );
 
-        $status = $this->passwords->reset($credentials, function($user, $password) {
+        $status = $this->passwords->reset($credentials, function ($user, $password) {
             $user->password = $password;
             $user->save();
 
             $this->auth->login($user);
         });
 
-        switch ( $status ) {
+        switch ($status) {
 
             case Status::PASSWORD_RESET:
 
                 notice()->success(trans($status));
+
                 return redirect('');
 
             default:
 
                 notice()->error(trans($status));
+
                 return redirect()->back()
                             ->withInput($request->only('email'));
 
         }
-
     }
-
-
 }

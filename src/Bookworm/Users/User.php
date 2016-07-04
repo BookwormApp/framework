@@ -17,25 +17,24 @@ class User extends Model implements
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
-	protected $table = 'users';
-	protected $fillable = ['name', 'email', 'password'];
-	protected $hidden = ['password', 'remember_token'];
+    protected $table = 'users';
+    protected $fillable = ['name', 'email', 'password'];
+    protected $hidden = ['password', 'remember_token'];
 
-	/* Attributes */
+    /* Attributes */
 
-	public function setPasswordAttribute($password)
-	{
-		$this->setPassword($password);
-	}
+    public function setPasswordAttribute($password)
+    {
+        $this->setPassword($password);
+    }
 
-	public function setPassword($password, $hashed = false)
-	{
-		if ( ! empty($password) ) {
-			$password = $hashed ? $password : bcrypt($password);
-			$this->attributes['password'] = $password;
-		}
+    public function setPassword($password, $hashed = false)
+    {
+        if (!empty($password)) {
+            $password = $hashed ? $password : bcrypt($password);
+            $this->attributes['password'] = $password;
+        }
 
-		return $this;
-	}
-
+        return $this;
+    }
 }

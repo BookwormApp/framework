@@ -1,12 +1,12 @@
-<?php namespace Bookworm\Providers;
+<?php
+
+namespace Bookworm\Providers;
 
 use Bookworm\Bookworm;
-use Bookworm\Support\Shortlist;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider {
-
+class AppServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -16,8 +16,6 @@ class AppServiceProvider extends ServiceProvider {
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -27,10 +25,10 @@ class AppServiceProvider extends ServiceProvider {
 
     private function publishMigrations()
     {
-        $migrations_path = ( method_exists($this->app, 'databasePath') ? $this->app->databasePath().'/migrations' : base_path('database/migrations') );
+        $migrations_path = (method_exists($this->app, 'databasePath') ? $this->app->databasePath().'/migrations' : base_path('database/migrations'));
 
         $this->publishes([
-            __DIR__ . '/../../database/migrations' => $migrations_path,
+            __DIR__.'/../../database/migrations' => $migrations_path,
         ], 'migrations');
     }
 
@@ -47,8 +45,6 @@ class AppServiceProvider extends ServiceProvider {
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -59,17 +55,16 @@ class AppServiceProvider extends ServiceProvider {
 
     private function registerHelper()
     {
-        $this->app->singleton('bookworm', function()
-        {
+        $this->app->singleton('bookworm', function () {
             $path = realpath(__DIR__.'/../../..');
+
             return new Bookworm($path);
         });
     }
 
     private function registerVersion()
     {
-        $this->app['events']->listen("composing: admin.partials.sidebar", function()
-        {
+        $this->app['events']->listen('composing: admin.partials.sidebar', function () {
             echo '<p class="sidebar-powered-by">Powered by Bookworm <span class="sidebar-version">Version '.app('bookworm')->version().'</span></p>';
         });
     }
@@ -88,5 +83,4 @@ class AppServiceProvider extends ServiceProvider {
     {
         return array('bookworm');
     }
-
 }

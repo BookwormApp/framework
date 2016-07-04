@@ -1,13 +1,13 @@
-<?php 
+<?php
 
 namespace Bookworm\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 
-class EventServiceProvider extends ServiceProvider {
-
-	/**
+class EventServiceProvider extends ServiceProvider
+{
+    /**
      * The event handler mappings for the application.
      *
      * @var array
@@ -25,8 +25,7 @@ class EventServiceProvider extends ServiceProvider {
     /**
      * Register the application's event listeners.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
-     * @return void
+     * @param \Illuminate\Contracts\Events\Dispatcher $events
      */
     public function boot(DispatcherContract $events)
     {
@@ -43,12 +42,8 @@ class EventServiceProvider extends ServiceProvider {
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-
     }
-
 }

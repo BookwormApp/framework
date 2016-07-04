@@ -1,10 +1,12 @@
-<?php namespace Bookworm\Providers;
+<?php
+
+namespace Bookworm\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ConfigServiceProvider extends ServiceProvider {
-
-	/**
+class ConfigServiceProvider extends ServiceProvider
+{
+    /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
@@ -12,33 +14,28 @@ class ConfigServiceProvider extends ServiceProvider {
     protected $defer = false;
 
     protected $config = [
-        'site'
+        'site',
     ];
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../../config' => config_path()
+            __DIR__.'/../../config' => config_path(),
         ]);
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        foreach ( $this->config as $config ) {
+        foreach ($this->config as $config) {
             $this->mergeConfigFrom(
-                __DIR__ . '/../../config/'.$config.'.php', $config
+                __DIR__.'/../../config/'.$config.'.php', $config
             );
         }
     }
-
 }

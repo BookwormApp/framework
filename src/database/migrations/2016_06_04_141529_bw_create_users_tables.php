@@ -3,16 +3,14 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BwCreateUsersTables extends Migration {
-
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-        Schema::create('users', function(Blueprint $table) {
+class BwCreateUsersTables extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -29,16 +27,13 @@ class BwCreateUsersTables extends Migration {
 
             $table->softDeletes();
         });
-	}
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-        Schema::drop('users');
     }
 
+    /**
+     * Reverse the migrations.
+     */
+    public function down()
+    {
+        Schema::drop('users');
+    }
 }

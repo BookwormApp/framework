@@ -7,40 +7,41 @@ use Illuminate\Contracts\Auth\Guard;
 use Bookworm\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
-class Sessions extends Controller {
+class Sessions extends Controller
+{
+    use ThrottlesLogins;
 
-	use ThrottlesLogins;
+    protected $auth;
 
-	protected $auth;
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
 
-	public function __construct(Guard $auth)
-	{
-		$this->auth = $auth;
+        $this->middleware('guest', ['except' => ['logout', 'session']]);
+    }
 
-		$this->middleware('guest', ['except' => ['logout', 'session']]);
-	}
+    public function create()
+    {
+        return view('auth.login');
+    }
 
-	public function create()
-	{
-		return view('auth.login');
-	}
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-	public function store(Request $request)
-	{
-		$this->validate($request, [
-			'email' => ['required', 'email'],
-			'password' => ['required']
-		]);
-
-		if ($this->hasTooManyLoginAttempts($request)) {
+        if ($this->hasTooManyLoginAttempts($request)) {
             return $this->sendLockoutResponse($request);
         }
 
         $credentials = ['email' => $request->input('email'), 'password' => $request->input('password')];
         $remember = $request->has('remember');
 
-        if ( $this->auth->attempt($credentials, $remember) ) {
+        if ($this->auth->attempt($credentials, $remember)) {
             $this->clearLoginAttempts($request);
+
             return redirect('');
         }
 
@@ -48,15 +49,16 @@ class Sessions extends Controller {
         notice()->error('Invalid login details');
 
         return redirect('login')->withInput($request->except('password'));
-	}
+    }
 
-	public function destroy()
-	{
-		$this->auth->logout();
-		return redirect('login');
-	}
+    public function destroy()
+    {
+        $this->auth->logout();
 
-	/**
+        return redirect('login');
+    }
+
+    /**
      * Get the login username to be used by the controller.
      *
      * @return string
@@ -65,5 +67,4 @@ class Sessions extends Controller {
     {
         return 'email';
     }
-
 }

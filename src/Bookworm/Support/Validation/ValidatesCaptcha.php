@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use ReCaptcha\ReCaptcha;
 
-trait ValidatesCaptcha {
-
+trait ValidatesCaptcha
+{
     public function validateCaptcha(Request $request)
     {
-        if ( app()->environment('testing') ) {
+        if (app()->environment('testing')) {
             return true;
         }
 
-        if ( config('site.captcha') == false ) {
+        if (config('site.captcha') == false) {
             return true;
         }
 
@@ -25,12 +25,11 @@ trait ValidatesCaptcha {
         if (!$response->isSuccess()) {
             throw new ValidationException(
                 new MessageBag([
-                    'recaptcha' => 'The captcha was not correct'
+                    'recaptcha' => 'The captcha was not correct',
                 ])
             );
         }
 
         return true;
     }
-
 }

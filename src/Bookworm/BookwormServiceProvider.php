@@ -5,8 +5,8 @@ namespace Bookworm;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
-class BookwormServiceProvider extends ServiceProvider {
-
+class BookwormServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -38,30 +38,26 @@ class BookwormServiceProvider extends ServiceProvider {
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
-        foreach ( $this->providers as $provider ) {
+        foreach ($this->providers as $provider) {
             $this->app->register('Bookworm\Providers\\'.$provider);
         }
 
-        foreach ( $this->external as $provider ) {
+        foreach ($this->external as $provider) {
             $this->app->register($provider);
         }
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
         $loader = AliasLoader::getInstance();
 
-        foreach ( $this->aliases as $class => $alias) {
+        foreach ($this->aliases as $class => $alias) {
             $loader->alias($class, $alias);
         }
     }
@@ -75,5 +71,4 @@ class BookwormServiceProvider extends ServiceProvider {
     {
         return array();
     }
-
 }

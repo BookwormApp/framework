@@ -1,3 +1,7 @@
-<?php namespace Bookworm\Exceptions;
+<?php
 
-class InvalidParametersException extends \Exception {}
+namespace Bookworm\Exceptions;
+
+class InvalidParametersException extends \Exception
+{
+}

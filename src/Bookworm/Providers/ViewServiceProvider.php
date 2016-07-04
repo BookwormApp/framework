@@ -1,10 +1,12 @@
-<?php namespace Bookworm\Providers;
+<?php
+
+namespace Bookworm\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ViewServiceProvider extends ServiceProvider {
-
-	/**
+class ViewServiceProvider extends ServiceProvider
+{
+    /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
@@ -13,22 +15,16 @@ class ViewServiceProvider extends ServiceProvider {
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
-    	$this->app['view']->addLocation(__DIR__.'/../../../resources/views');
+        $this->app['view']->addLocation(__DIR__.'/../../../resources/views');
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-
     }
-
 }

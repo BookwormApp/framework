@@ -5,8 +5,8 @@ namespace Bookworm\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
-class RouteServiceProvider extends ServiceProvider {
-
+class RouteServiceProvider extends ServiceProvider
+{
     /**
      * This namespace is applied to the controller routes in your routes file.
      *
@@ -19,12 +19,11 @@ class RouteServiceProvider extends ServiceProvider {
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
-     * @return void
+     * @param \Illuminate\Routing\Router $router
      */
     public function boot(Router $router)
     {
-        if ( ! $this->app->routesAreCached() ) {
+        if (!$this->app->routesAreCached()) {
             $this->map($router);
         }
     }
@@ -32,25 +31,21 @@ class RouteServiceProvider extends ServiceProvider {
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router  $router
-     * @return void
+     * @param \Illuminate\Routing\Router $router
      */
     public function map(Router $router)
     {
         $router->group([
-            'namespace' => $this->namespace, 'middleware' => 'web'
-        ], function($router) {
+            'namespace' => $this->namespace, 'middleware' => 'web',
+        ], function ($router) {
             require app('bookworm')->basePath().'/src/Bookworm/Http/routes.php';
         });
     }
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
     }
-
 }

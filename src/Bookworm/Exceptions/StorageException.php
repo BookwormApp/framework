@@ -1,3 +1,7 @@
-<?php namespace Bookworm\Exceptions;
+<?php
 
-class StorageException extends \Exception {}
+namespace Bookworm\Exceptions;
+
+class StorageException extends \Exception
+{
+}

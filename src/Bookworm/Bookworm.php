@@ -2,25 +2,24 @@
 
 namespace Bookworm;
 
-class Bookworm {
+class Bookworm
+{
+    const VERSION = '0.1.0';
 
-	const VERSION = '0.1.0';
+    protected $basePath;
 
-	protected $basePath;
+    public function __construct($basePath)
+    {
+        $this->basePath = $basePath;
+    }
 
-	public function __construct($basePath)
-	{
-		$this->basePath = $basePath;
-	}
+    public function version()
+    {
+        return static::VERSION;
+    }
 
-	public function version()
-	{
-		return static::VERSION;
-	}
-
-	public function basePath()
-	{
-		return $this->basePath;
-	}
-
+    public function basePath()
+    {
+        return $this->basePath;
+    }
 }

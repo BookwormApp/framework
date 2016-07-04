@@ -1,10 +1,12 @@
-<?php namespace Bookworm\Providers;
+<?php
+
+namespace Bookworm\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ConsoleServiceProvider extends ServiceProvider {
-
-	/**
+class ConsoleServiceProvider extends ServiceProvider
+{
+    /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
@@ -13,8 +15,6 @@ class ConsoleServiceProvider extends ServiceProvider {
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -23,8 +23,6 @@ class ConsoleServiceProvider extends ServiceProvider {
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -34,8 +32,7 @@ class ConsoleServiceProvider extends ServiceProvider {
 
     private function registerInstall()
     {
-        $this->app->singleton('command.bookworm.install', function($app)
-        {
+        $this->app->singleton('command.bookworm.install', function ($app) {
             return $app->make('Bookworm\Console\Commands\InstallCommand');
         });
 
@@ -44,12 +41,10 @@ class ConsoleServiceProvider extends ServiceProvider {
 
     private function registerUpdate()
     {
-        $this->app->singleton('command.bookworm.update', function($app)
-        {
+        $this->app->singleton('command.bookworm.update', function ($app) {
             return $app->make('Bookworm\Console\Commands\UpdateCommand');
         });
 
         $this->commands('command.bookworm.update');
     }
-
 }

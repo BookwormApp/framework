@@ -5,8 +5,8 @@ namespace Bookworm\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 
-class ShareUserFromSession {
-
+class ShareUserFromSession
+{
     /**
      * @var \Illuminate\Contracts\View\Factory
      */
@@ -31,5 +31,4 @@ class ShareUserFromSession {
 
         return $next($request);
     }
-
 }
