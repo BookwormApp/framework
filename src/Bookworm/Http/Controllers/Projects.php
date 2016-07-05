@@ -35,6 +35,7 @@ class Projects extends Controller {
     {
         $this->validate($request, [
             'title' => ['required'],
+            'slug' => ['required', 'alpha_dash', 'unique:projects,slug']
         ]);
 
         $project = $this->project->create($request->input(), [
@@ -68,6 +69,7 @@ class Projects extends Controller {
 
         $this->validate($request, [
             'title' => ['required'],
+            'slug' => ['required', 'alpha_dash', 'unique:projects,slug,'.$project->id]
         ]);
 
         $project = $this->project->update($project, $request->input());

@@ -20,10 +20,6 @@
                 <label for="title">Title</label>
                 {!! Form::text('title', old('title', $case ? $case->title : ''), ['class' => 'form-control']) !!}
             </div>
-            <div class="form-group{{ $errors->has('project') ? ' has-error' : '' }}">
-                <label for="project">Project</label>
-                {!! Form::select('project', select_placeholder($projects),  old('project', $case && $case->project ? $case->project->ref : ''), ['class' => 'form-control']) !!}
-            </div>
         </div>
         <div class="panel-footer">
             <div class="pull-right">

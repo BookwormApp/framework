@@ -2,17 +2,18 @@
 
 namespace Bookworm\Projects;
 
-use Bookworm\Cases\ProjectCase;
-use Bookworm\Support\Entities\Model;
 use Bookworm\Users\User;
+use Bookworm\Cases\ProjectCase;
+use Bookworm\Projects\UrlGenerator;
+use Bookworm\Support\Entities\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model {
 
-    use SoftDeletes;
+    use SoftDeletes, UrlGenerator;
 
     protected $table = 'projects';
-    protected $fillable = ['status','title'];
+    protected $fillable = ['status','title','slug'];
 
     /* Relations */
 
@@ -28,7 +29,12 @@ class Project extends Model {
 
     /* Helpers */
 
-    public function url($suffix = '')
+    public function getUrl()
+    {
+        return $this->slug;
+    }
+
+    public function editUrl($suffix = '')
     {
         return url(rtrim('settings/projects/'.$this->ref.'/'.$suffix, '/'));
     }

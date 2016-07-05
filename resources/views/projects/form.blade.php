@@ -20,6 +20,10 @@
                 <label for="title">Title</label>
                 {!! Form::text('title', old('title', $project ? $project->title : ''), ['class' => 'form-control']) !!}
             </div>
+            <div class="form-group{{ $errors->has('slug') ? ' has-error' : '' }}">
+                <label for="slug">Slug</label>
+                {!! Form::text('slug', old('slug', $project ? $project->slug : ''), ['class' => 'form-control']) !!}
+            </div>
         </div>
         <div class="panel-footer">
             <div class="pull-right">

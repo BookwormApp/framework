@@ -9,9 +9,9 @@ use Bookworm\Users\User;
 class ProjectCase extends Model {
 
     protected $table = 'cases';
-    protected $fillable = ['title','content','status','priority','due_at','completed'];
+    protected $fillable = ['title','content','status','type','priority','due_at','completed_at'];
     protected $casts = ['completed' => 'boolean'];
-    protected $dates = ['due_at'];
+    protected $dates = ['due_at', 'completed_at'];
 
     /* Relations */
 

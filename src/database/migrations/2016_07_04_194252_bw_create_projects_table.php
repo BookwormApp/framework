@@ -18,8 +18,9 @@ class BwCreateProjectsTable extends Migration
             $table->increments('id');
             $table->string('ref', 10)->unique();
             $table->integer('created_by')->unsigned()->nullable();
-            $table->string('status');
+            $table->string('slug')->unique();
             $table->string('title');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
 

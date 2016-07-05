@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 Route::get('login', 'Auth\Sessions@create');
 Route::post('login', 'Auth\Sessions@store');
 Route::get('logout', 'Auth\Sessions@destroy');
@@ -25,11 +27,19 @@ Route::group(['middleware' => 'auth'], function ($r) {
     $r->post('settings/projects/{ref}', 'Projects@update');
     $r->delete('settings/projects/{ref}', 'Projects@destroy');
 
-    $r->get('cases', 'Cases@index');
-    $r->get('cases/create', 'Cases@create');
-    $r->post('cases/create', 'Cases@store');
-    $r->get('cases/{ref}', 'Cases@edit');
-    $r->post('cases/{ref}', 'Cases@update');
-    $r->delete('cases/{ref}', 'Cases@destroy');
+    Route::group(['prefix' => '{project}', 'middleware' => 'project.url'], function($r) {
+
+        $r->get('/', function(Request $request) {
+            return redirect($request->project->url('cases'));
+        });
+
+        $r->get('cases', 'Cases@index');
+        $r->get('cases/create', 'Cases@create');
+        $r->post('cases/create', 'Cases@store');
+        $r->get('cases/{ref}', 'Cases@edit');
+        $r->post('cases/{ref}', 'Cases@update');
+        $r->delete('cases/{ref}', 'Cases@destroy');
+
+    });
 
 });

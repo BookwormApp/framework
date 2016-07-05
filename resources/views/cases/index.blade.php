@@ -20,7 +20,7 @@
                                 <p>No cases match search</p>
                             @else
                                 <p>No cases</p>
-                                <a href="{{ url('cases/create') }}" class="btn btn-default">New Case</a>
+                                <a href="{{ $currentProject->url('cases/create') }}" class="btn btn-default">New Case</a>
                             @endif
                         </div>
                     </div>
@@ -36,11 +36,11 @@
                             </thead>
                             <tbody>
                             @foreach ( $cases as $case )
-                                <tr data-href="{{ $case->url() }}">
+                                <tr data-href="{{ $currentProject->url($case) }}">
                                     <td>{{ $case->ref }}</td>
                                     <td>{{ $case->title }}</td>
                                     <td class="links">
-                                        <a href="{{ $case->url() }}" class="btn btn-default">Edit</a>
+                                        <a href="{{ $currentProject->url($case) }}" class="btn btn-default">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach

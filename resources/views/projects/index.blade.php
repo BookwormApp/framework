@@ -36,11 +36,11 @@
                             </thead>
                             <tbody>
                             @foreach ( $projects as $project )
-                                <tr data-href="{{ $project->url() }}">
+                                <tr data-href="{{ $project->editUrl() }}">
                                     <td>{{ $project->ref }}</td>
                                     <td>{{ $project->title }}</td>
                                     <td class="links">
-                                        <a href="{{ $project->url() }}" class="btn btn-default">Edit</a>
+                                        <a href="{{ $project->editUrl() }}" class="btn btn-default">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach

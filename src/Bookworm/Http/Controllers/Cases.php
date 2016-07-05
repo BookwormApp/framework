@@ -2,10 +2,10 @@
 
 namespace Bookworm\Http\Controllers;
 
-use Bookworm\Exceptions\NotFoundException;
-use Bookworm\Cases\CaseRepository;
-use Bookworm\Projects\Project;
 use Illuminate\Http\Request;
+use Bookworm\Projects\Project;
+use Bookworm\Cases\CaseRepository;
+use Bookworm\Exceptions\NotFoundException;
 
 class Cases extends Controller {
 
@@ -38,22 +38,18 @@ class Cases extends Controller {
             'project' => ['exists:projects,ref']
         ]);
 
-        $related = [];
-
-        if ( $request->input('project') ) {
-            $related['project'] = Project::where('ref','=',$request->input('project'))->first();
-        }
-
         $case = $this->case->create($request->input(), [
             'createdBy' => $request->user()
-        ], $related);
+        ], [
+            'project' => $request->project
+        ]);
 
         notice('New case created');
 
-        return redirect('cases');
+        return project_redirect('cases');
     }
 
-    public function edit($ref, Request $request)
+    public function edit($project, $ref, Request $request)
     {
         $case = $this->case->findByRef($ref);
 
@@ -65,7 +61,7 @@ class Cases extends Controller {
             ->with('case', $case);
     }
 
-    public function update($ref, Request $request)
+    public function update($project, $ref, Request $request)
     {
         $case = $this->case->findByRef($ref);
 
@@ -77,20 +73,15 @@ class Cases extends Controller {
             'title' => ['required'],
         ]);
 
-        $related = [];
 
-        if ( $request->input('project') ) {
-            $related['project'] = Project::where('ref','=',$request->input('project'))->first();
-        }
-
-        $case = $this->case->update($case, $request->input(), $related);
+        $case = $this->case->update($case, $request->input());
 
         notice()->success('Updated case');
 
-        return redirect('cases');
+        return project_redirect('cases');
     }
 
-    public function destroy($ref, Request $request)
+    public function destroy($project, $ref, Request $request)
     {
         $case = $this->case->findByRef($ref);
 
@@ -102,7 +93,7 @@ class Cases extends Controller {
 
         notice('Deleted case');
 
-        return redirect('cases');
+        return project_redirect('cases');
     }
 
 }

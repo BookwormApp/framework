@@ -4,6 +4,7 @@ namespace Bookworm\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Bookworm\Http\Middleware\ProjectUrl;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,8 @@ class RouteServiceProvider extends ServiceProvider
         if (!$this->app->routesAreCached()) {
             $this->map($router);
         }
+
+        $router->middleware('project.url', ProjectUrl::class);
     }
 
     /**

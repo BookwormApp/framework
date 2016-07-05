@@ -65,6 +65,8 @@ class InstallCommand extends Command
         $this->info('Copying assets');
         $this->call('vendor:publish', ['--provider' => 'Bookworm\Providers\AppServiceProvider', '--tag' => ['assets']]);
 
+        system('composer dump-autoload');
+
         if (Schema::hasTable('migrations')) {
             $this->call('migrate:reset', ['--force']);
         }

@@ -21,6 +21,20 @@ class ProjectRepository extends DbRepository {
         $this->project = $project;
     }
 
+    public function findBySlug($slug)
+    {
+        return $this->newQuery()->where('slug','=',$slug)->first();
+    }
+
+    public function allActive()
+    {
+        $query = $this->newQuery();
+
+        $query->orderBy('updated_at','desc');
+
+        return $query->get();
+    }
+
     public function search(array $filters = [], $sort = null, $paginate = true)
     {
         $query = $this->buildSearchQuery($filters, $sort);

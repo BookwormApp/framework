@@ -8,6 +8,18 @@ if (!function_exists('bw_path')) {
     }
 }
 
+if (!function_exists('project_url')) {
+    function project_url() {
+        return app('request')->project->url();
+    }
+}
+
+if (!function_exists('project_redirect')) {
+    function project_redirect() {
+        return redirect(app('request')->project->url());
+    }
+}
+
 if (!function_exists('get_gravatar')) {
     function get_gravatar($email, $size = null)
     {
