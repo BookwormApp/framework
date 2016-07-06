@@ -24,6 +24,7 @@ class BwCreateCasesTables extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->string('status');
+            $table->string('type')->index();
             $table->string('priority')->nullable();
             $table->timestamp('due_at');
             $table->boolean('completed')->default(0);

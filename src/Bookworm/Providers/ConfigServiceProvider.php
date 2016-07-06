@@ -15,6 +15,7 @@ class ConfigServiceProvider extends ServiceProvider
 
     protected $config = [
         'site',
+        'cases',
     ];
 
     /**

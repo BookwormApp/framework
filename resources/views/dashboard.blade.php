@@ -10,19 +10,13 @@
 
     <div class="row">
     	@foreach ( $projects as $project )
-    	<div class="col-sm-4">
-    		<div class="panel panel-default panel-project">
-                <a href="{{ $project->url() }}">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">{{ $project->title }}</h2>
-                    </div>
-                    <div class="panel-body">
-                    </div>
-                </a>
+    	<div class="col-sm-3">
+    		<div class="panel panel-project panel-project-active">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><a href="{{ $project->url() }}">{{ $project->title }}</a></h2>
+                </div>
                 <div class="panel-footer">
-                    <ul>
-                        <li>Last Updated: {{ $project->created_at->format('d/m/y h:i A') }}</li>
-                    </ul>
+                    Last Updated: {{ $project->created_at->format('d/m/y h:i A') }}</li>
                 </div>
             </div>
     	</div>

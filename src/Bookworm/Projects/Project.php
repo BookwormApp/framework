@@ -39,4 +39,13 @@ class Project extends Model {
         return url(rtrim('settings/projects/'.$this->ref.'/'.$suffix, '/'));
     }
 
+    public function is(Project $project = null)
+    {
+        if (is_null($project)) {
+            return false;
+        }
+
+        return $this->id == $project->id;
+    }
+
 }

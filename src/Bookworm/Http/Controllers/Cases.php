@@ -19,7 +19,7 @@ class Cases extends Controller {
         $filters = $request->except(['page','sort']);
         $sort = $request->input('sort');
 
-        $cases = $this->case->search($filters, $sort);
+        $cases = $this->case->searchForProject($request->project, $filters, $sort);
 
         return view('cases.index')
             ->with('cases', $cases);
@@ -35,18 +35,30 @@ class Cases extends Controller {
     {
         $this->validate($request, [
             'title' => ['required'],
-            'project' => ['exists:projects,ref']
+            'project' => ['exists:projects,ref'],
+            'type' => ['required', 'in:'.implode(',', array_keys(config('cases.types')))]
         ]);
 
         $case = $this->case->create($request->input(), [
-            'createdBy' => $request->user()
-        ], [
+            'createdBy' => $request->user(),
             'project' => $request->project
         ]);
 
         notice('New case created');
 
         return project_redirect('cases');
+    }
+
+    public function view($project, $ref, Request $request)
+    {
+        $case = $this->case->findByRef($ref);
+
+        if ( ! $case ) {
+            throw new NotFoundException;
+        }
+
+        return view('cases.view')
+                ->with('case', $case);
     }
 
     public function edit($project, $ref, Request $request)
@@ -71,6 +83,7 @@ class Cases extends Controller {
 
         $this->validate($request, [
             'title' => ['required'],
+            'type' => ['required', 'in:'.implode(',', array_keys(config('cases.types')))]
         ]);
 
 

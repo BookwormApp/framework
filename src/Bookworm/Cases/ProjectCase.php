@@ -9,7 +9,7 @@ use Bookworm\Users\User;
 class ProjectCase extends Model {
 
     protected $table = 'cases';
-    protected $fillable = ['title','content','status','type','priority','due_at','completed_at'];
+    protected $fillable = ['title','description','status','type','priority','due_at','completed_at'];
     protected $casts = ['completed' => 'boolean'];
     protected $dates = ['due_at', 'completed_at'];
 
@@ -45,6 +45,11 @@ class ProjectCase extends Model {
     public function isCompleted()
     {
         return $this->completed;
+    }
+
+    public function hasStatus($status)
+    {
+        return $this->status == $status;
     }
 
     public function url($suffix = '')

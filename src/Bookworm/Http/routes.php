@@ -33,11 +33,14 @@ Route::group(['middleware' => 'auth'], function ($r) {
             return redirect($request->project->url('cases'));
         });
 
+        $r->get('board', 'Board@index');
+
         $r->get('cases', 'Cases@index');
         $r->get('cases/create', 'Cases@create');
         $r->post('cases/create', 'Cases@store');
-        $r->get('cases/{ref}', 'Cases@edit');
-        $r->post('cases/{ref}', 'Cases@update');
+        $r->get('cases/{ref}', 'Cases@view');
+        $r->get('cases/{ref}/edit', 'Cases@edit');
+        $r->post('cases/{ref}/edit', 'Cases@update');
         $r->delete('cases/{ref}', 'Cases@destroy');
 
     });

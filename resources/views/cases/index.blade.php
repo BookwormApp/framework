@@ -4,7 +4,7 @@
     <div class="page-header clearfix">
         <h1 class="page-title">Cases</h1>
         <div class="page-actions">
-            <a href="{{ url('cases/create') }}" class="btn btn-default">New Case</a>
+            <a href="{{ $currentProject->url('cases/create') }}" class="btn btn-default">New Case</a>
         </div>
     </div>
 

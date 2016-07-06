@@ -2,6 +2,7 @@
 
 namespace Bookworm\Cases;
 
+use Bookworm\Projects\Project;
 use Bookworm\Exceptions\StorageException;
 use Bookworm\Support\Entities\DbRepository;
 use Origami\Support\Entities\PaginateTrait;
@@ -21,9 +22,38 @@ class CaseRepository extends DbRepository {
         $this->case = $case;
     }
 
+    public function boardForProject(Project $project)
+    {
+        $query = $this->newQuery();
+
+        $query->where('project_id','=',$project->id)
+                ->orderBy('updated_at', 'desc');
+
+        $results = $query->get();
+
+        $cases = collect();
+
+        foreach ( ['open', 'progress', 'closed'] as $status ) {
+            $cases->put($status, $results->filter(function($case) use($status) {
+                return $case->hasStatus($status);
+            }));
+        }
+
+        return $cases;
+    }
+
     public function search(array $filters = [], $sort = null, $paginate = true)
     {
         $query = $this->buildSearchQuery($filters, $sort);
+
+        return $paginate ? $this->buildPaginatedResults($query) : $query->get();
+    }
+
+    public function searchForProject(Project $project, array $filters = [], $sort = null, $paginate = true)
+    {
+        $query = $this->buildSearchQuery($filters, $sort);
+
+        $query->where('project_id','=',$project->id);
 
         return $paginate ? $this->buildPaginatedResults($query) : $query->get();
     }
@@ -59,6 +89,7 @@ class CaseRepository extends DbRepository {
     {
         $case = $this->case->newInstance($fields);
         $case->ref = $this->newCaseRef();
+        $case->status = 'open';
 
         if ( $project = array_get($related, 'project') ) {
             $case->project()->associate($project);

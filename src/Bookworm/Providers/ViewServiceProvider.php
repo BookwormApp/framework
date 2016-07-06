@@ -2,8 +2,9 @@
 
 namespace Bookworm\Providers;
 
-use Bookworm\Http\Composers\CaseOptionsComposer;
 use Illuminate\Support\ServiceProvider;
+use Bookworm\Http\Composers\ProjectNavComposer;
+use Bookworm\Http\Composers\CaseOptionsComposer;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,7 @@ class ViewServiceProvider extends ServiceProvider
         $this->app['view']->addLocation(__DIR__.'/../../../resources/views');
 
         $this->app['view']->composer('cases.form', CaseOptionsComposer::class);
+        $this->app['view']->composer('partials.header', ProjectNavComposer::class);
     }
 
     /**

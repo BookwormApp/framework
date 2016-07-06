@@ -20,8 +20,15 @@
                 <label for="title">Title</label>
                 {!! Form::text('title', old('title', $case ? $case->title : ''), ['class' => 'form-control']) !!}
             </div>
+            <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
+                <label for="type">Type</label>
+                {!! Form::select('type', config('cases.types'), old('type', $case ? $case->type : ''), ['class' => 'form-control']) !!}
+            </div>
         </div>
-        <div class="panel-footer">
+        <div class="panel-footer clearfix">
+            <div class="pull-left">
+                <a href="{{ $currentProject->url($case) }}" class="btn btn-default">Cancel</a>
+            </div>
             <div class="pull-right">
                 <button type="submit" class="btn btn-primary">{{ $case ? 'Update' : 'Create' }}</button>
             </div>

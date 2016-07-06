@@ -15,7 +15,22 @@
             @if ( Auth::user() && isset($currentProject) )
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
+                @if ( $projects->isEmpty() )
                 <li><a href="{{ $currentProject->url() }}">{{ $currentProject->title }}</a></li>
+                @else
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ $currentProject->title }} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><span>Change project:</span></li>
+                        <li role="separator" class="divider"></li>
+                        @foreach( $projects as $project )
+                        <li><a href="{{ $project->url() }}">{{ $project->title }}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endif
                 <li><a href="{{ $currentProject->url('cases') }}">Cases</a></li>
                 <li><a href="{{ $currentProject->url('board') }}">Board</a></li>
             </ul>
